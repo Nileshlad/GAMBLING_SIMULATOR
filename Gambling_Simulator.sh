@@ -2,28 +2,37 @@
 echo"-----------------------------------WELL COME GAMBLING SIMULATION--------------------------------"
 
 #CONSTANT
-EVERY_DAY_STAKE=100;
+EVERY_DAY_STAKE=100
 EVERY_DAY_BET=1
-WIN_CASH=$(($EVERY_DAY_STAKE + $EVERY_DAY_STAKE/2))
-LOST_CASH=$(($EVERY_DAY_STAKE - $EVERY_DAY_STAKE/2))
-#VARIABLE
-isWin=1
+IS_WIN=1
+DAYS_IN_MONTH=20
 
-#TO 
+#VARIABLE
+maxWin=$(($EVERY_DAY_STAKE+$EVERY_DAY_STAKE/2))
+maxLoose=$(($EVERY_DAY_STAKE-$EVERY_DAY_STAKE/2))
+
+#CHECK IF WIN OR LOSE UNTIL CONDITION
+for (( index=1; index<=$DAYS_IN_MONTH; index++))
+do
 cash=$EVERY_DAY_STAKE
 
-#TO RANDOM VALUE 0 AND 1
-checkWinLoss=$((RANDOM%2))
-while [[ $cash -ne $WIN_CASH && $cash -ne $LOST_CASH ]]
+while [[ $cash -ne $maxWin  &&  $cash -ne $maxLoose ]]
 do
-	if [ $checkWinLoss -eq $isWin ]
-		then
-			((cash++))
-	else
-			((cash--))
-	fi
+	randomNumber=$((RANDOM%2))
+if [ $randomNumber -eq $IS_WIN ]
+then
+	((winCount++))
+	((cash++))
+else
+	((loseCount++))
+	((cash--))
+fi
+done
+	winCount=0
+	loseCount=0
+	cash=$(( cash - EVERY_DAY_STAKE ))
+	totalcash=$(($totalcash+$(($cash))))
+	echo "$(($cash-$EVERY_DAY_STAKE))"
 done
 
-#TO PRINT
-echo $cash
-
+echo "Total Cash:$totalcash"
