@@ -1,11 +1,12 @@
 #!/bin/bash -x
 echo"-----------------------------------WELL COME GAMBLING SIMULATION--------------------------------"
 
+declare -a TotalCashMonth
 #CONSTANT
 EVERY_DAY_STAKE=100
 EVERY_DAY_BET=1
 IS_WIN=1
-DAYS_IN_MONTH=20
+DAYS_IN_MONTH=30
 
 #VARIABLE
 maxWin=$(($EVERY_DAY_STAKE+$EVERY_DAY_STAKE/2))
@@ -32,7 +33,13 @@ done
 	loseCount=0
 	cash=$(( cash - EVERY_DAY_STAKE ))
 	totalcash=$(($totalcash+$(($cash))))
-	echo "$(($cash-$EVERY_DAY_STAKE))"
+	TotalCashMonth[index]={$totalcash}
+if [ $cash -gt 0 ]
+then
+		echo "win:$cash"
+else
+		echo "lost:$cash"
+fi
 done
-
 echo "Total Cash:$totalcash"
+
