@@ -1,6 +1,5 @@
-#!/bin/bash
-
-echo "--------------------------------------------------------WELL COME GAMBLING SIMULATION-------------------------------------------------"
+#!/bin/bash -x
+echo"-----------------------------------WELL COME GAMBLING SIMULATION--------------------------------"
 
 #DECLARE A DICTIONARY
 declare -A dailyCash
@@ -39,7 +38,8 @@ function gamble()
 }
 
 #CHECK IF WIN OR LOSE UNTIL CONDITION
-
+while [[ flag -ne 1 ]]
+do
 	for ((month=1; month<=$MONTH_IN_YEAR; month++))
 	do
 		for (( day=1; day<=$DAYS_IN_MONTH; day++))
@@ -84,6 +84,18 @@ done
 echo "${totalCashMonth[@]}"
 echo "most lucky is day is  $maxday cash:$max"
 echo "most unlucky is day is  $minday cash:$min"
+echo " "
+done
+if [ $totalCash -gt 0 ]
+then
+echo "You can play for next $MONTH_IN_YEAR month"
+else
+flag=1
+fi
+echo "Total Cash:$totalCash"
+totalCash=0
+done
+echo "You Don't have cash to play.."
 echo " "
 done
 
